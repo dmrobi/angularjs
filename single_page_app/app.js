@@ -21,9 +21,22 @@ myApp.config(function ($routeProvider) {
     
 });
 
-myApp.controller('mainController', ['$scope', '$log', function($scope, $log) {
+myApp.service('customService', function () {
+    
+    this.name = "Dm Robi";
+    this.namelength = function(){
+        return this.name.length;
+    };
+
+});
+
+myApp.controller('mainController', ['$scope', '$log', 'customService', function($scope, $log, customService) {
     
     $scope.name = 'Main';
+
+    customService.name = "Robiul Islam Robi";
+    $log.log(customService.name);
+    $log.log(customService.namelength());
     
 }]);
 
