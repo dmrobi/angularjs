@@ -61,3 +61,10 @@ myApp.controller('mainController', ['$scope', '$log', '$timeout', '$interval', '
     };
                                     
 }]);//......End mainController..........
+
+myApp.controller('secondController', ['$scope', function($scope){
+    
+    $scope.name = "Second Controller";
+    $scope.details = "This second Controller to manage more data.";
+
+}]);
