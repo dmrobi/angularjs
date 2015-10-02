@@ -38,22 +38,22 @@
 
 	ToDo.controller('todoController', ['$scope', '$http', function ($scope, $http) {
 		
-		$scope.todos =[];
-
-		$http.get('todos.json').then(function(json){
-			$scope.todos = json.data;
+		$http.get('todos.json').then(function(response){
+			$scope.todos = response.data;
 			//console.log(json);
 		});
 
 		$scope.addTodo = function(){
-			//$scope.todos.push({'title':$scope.newtodo, 'done':false});
 			
-			$http.post('todos.json', {'title':$scope.newtodo, 'done':false}).then(function(json){
-				$scope.todos = json.data;
-				//console.log(json);
-			});
-
+			$scope.todos.push({'title':$scope.newtodo, 'done':false});
+			
+			// $http.post('todos.json', {'title':$scope.newtodo, 'done':false}).then(function(response){
+			// 	//$scope.todos = response.data;
+			// 	//console.log(json);
+			// });
+					
 			$scope.newtodo = '';
+
 		};
 
 		$scope.clearCompleted = function(){
