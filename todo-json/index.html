@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="ToDo">
+<head>
+	<title>todo</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+	<style type="text/css">
+	ul{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.done{
+		text-decoration: line-through;
+		color: #CCC;
+	}
+	</style>
+</head>
+<body>
+
+<div ng-controller="todoController">
+	<form name="frm" ng-submit="addTodo()">
+		<input type="text" name="newtodo" id="newtodo" ng-model="newtodo" required>
+		<input ng-disabled="frm.$invalid" type="submit" value="Add">
+	</form>
+	<button ng-click="clearCompleted()">Clear Completed</button>
+	<hr>
+	<ul>
+		<li ng-repeat="todo in todos">
+			<input type="checkbox" ng-model="todo.done">
+			<span ng-class="{'done':todo.done}">{{todo.title}}</span>
+		</li>
+	</ul>
+</div>
+
+<script>
+	var ToDo = angular.module('ToDo', []);
+
+	ToDo.controller('todoController', ['$scope', '$http', function ($scope, $http) {
+		
+		$scope.todos =[];
+
+		$http.get('todos.json').then(function(json){
+			$scope.todos = json.data;
+			//console.log(json);
+		});
+
+		$scope.addTodo = function(){
+			//$scope.todos.push({'title':$scope.newtodo, 'done':false});
+			
+			$http.post('todos.json', {'title':$scope.newtodo, 'done':false}).then(function(json){
+				$scope.todos = json.data;
+				//console.log(json);
+			});
+
+			$scope.newtodo = '';
+		};
+
+		$scope.clearCompleted = function(){
+			$scope.todos = $scope.todos.filter(function(item){
+				return !item.done;
+			});
+		};
+
+	}])
+</script>
+</body>
+</html>
